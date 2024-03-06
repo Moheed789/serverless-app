@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1570.0",
+    "joi": "^17.12.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "serverless-iam-roles-per-function": "^3.2.0"
+  }
+}
