@@ -88,7 +88,20 @@ functions:
           path: /updateEmployee/{id}
           method: PUT
           cors: true
-
+  generatedSignedUrl:
+    handler: functions/files/generatePutSignUrl.handler
+    events:
+      - http:
+          path: /generateEmployeeSignedUrl
+          method: POST
+          cors: true
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - 's3:*'
+        Resource:
+          - !Sub "arn:aws:s3:::moheedemployees3bucket/*"
+          
 
 
 resources:
@@ -107,3 +120,7 @@ resources:
         KeySchema:
           - AttributeName: 'id'
             KeyType: 'HASH'
+    MyS3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: moheedemployees3bucket
