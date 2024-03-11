@@ -101,6 +101,27 @@ functions:
           - 's3:*'
         Resource:
           - !Sub "arn:aws:s3:::moheedemployees3bucket/*"
+  getSignedUrl:
+    handler: functions/files/generateGetSignUrl.handler
+    tracing: Active
+    timeout: 10
+    events:
+      - http:
+          path: /getEmployeesSignedUrl
+          method: GET
+          cors: true
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - 's3:ListBucket'
+        Resource:
+          - !Sub "arn:aws:s3:::moheedemployees3bucket"
+      - Effect: 'Allow'
+        Action:
+          - 's3:GetObject'
+        Resource:
+          - !Sub "arn:aws:s3:::moheedemployees3bucket/*"
+
           
 
 

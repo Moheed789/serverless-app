@@ -17,7 +17,7 @@ exports.handler = async (event) => {
     let { fileName: reqFileName, fileType: reqFileType } = body;
     const generatedFileName = `${uuidv4()}-${reqFileName}`;
     const s3Key = `document/${generatedFileName}`;
-    const expires = 360; // In seconds
+    const expires = 360;
     const bucket = 'moheedemployees3bucket'
     const params = {
         Bucket: bucket,
