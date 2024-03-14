@@ -11,6 +11,7 @@ const schema = Joi.object({
 const updateItemschema = Joi.object({
     name: Joi.string().required(),
     age: Joi.number().optional(),
+    createdAt: Joi.string().optional(),
     position: Joi.string().optional(),
     department: Joi.string().optional(),
     salary: Joi.number().optional(),

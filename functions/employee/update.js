@@ -23,7 +23,7 @@ exports.handler = async (event) => {
         ExpressionAttributeValues[':name'] = data.name;
     }
 
-    const optionalAttributes = ['position', 'age', 'department', 'salary'];
+    const optionalAttributes = ['position', 'age', 'department', 'salary', 'createdAt'];
     optionalAttributes.forEach(attr => {
         if (data.hasOwnProperty(attr)) {
             updateExpression += `#${attr} = :${attr}, `;

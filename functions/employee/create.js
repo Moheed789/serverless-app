@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk");
 const { createEmployBodyValidate } = require("../../employeeSchema");
 const {v4: uuidv4} = require("uuid");
+const dayjs = require("dayjs");
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async (event) => {
@@ -8,6 +9,7 @@ exports.handler = async (event) => {
 
     try {
         let reqData = JSON.parse(event.body);
+        let date = dayjs().unix();
         let { error, value } = createEmployBodyValidate(reqData);
     
         if (error) {
@@ -25,6 +27,8 @@ exports.handler = async (event) => {
             TableName: "employee-table",
             Item: {
               id: employeeId,
+              createdAt: date,
+              updatedAt: date,
               ...value,
             },
           })

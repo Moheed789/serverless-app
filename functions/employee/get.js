@@ -2,10 +2,26 @@ const AWS = require("aws-sdk");
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async (event) => {
-    console.log('Hello, anwar');
+    console.log('Executing query with specific department');
+
+    const employeeDepartment = event.queryStringParameters.department;
+
+    console.log("Department", employeeDepartment);
 
     try {
-        const res = await dynamodb.scan({ TableName: "employee-table" }).promise();
+        const params = {
+            TableName: "employee-table",
+            IndexName: "department-index",
+            KeyConditionExpression: "#department = :departmentValue",
+            ExpressionAttributeNames: {
+                "#department": "department",
+            },
+            ExpressionAttributeValues: {
+                ":departmentValue": employeeDepartment,
+            }
+        };
+
+        const res = await dynamodb.query(params).promise();
         console.log(JSON.stringify(res));
     
         return {
