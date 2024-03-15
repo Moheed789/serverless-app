@@ -9,21 +9,21 @@ exports.handler = async (event) => {
     console.log("Department", employeeDepartment);
 
     try {
+        const attributeName = "department";
+
         const params = {
             TableName: "employee-table",
-            IndexName: "department-index",
-            KeyConditionExpression: "#department = :departmentValue",
+            FilterExpression: '#attrName = :attrValue',
             ExpressionAttributeNames: {
-                "#department": "department",
+                '#attrName': attributeName
             },
             ExpressionAttributeValues: {
-                ":departmentValue": employeeDepartment,
+                ':attrValue': employeeDepartment
             }
         };
 
-        const res = await dynamodb.query(params).promise();
-        console.log(JSON.stringify(res));
-    
+        const res = await dynamodb.scan(params).promise();
+
         return {
             statusCode: 200,
             body: JSON.stringify(res.Items)

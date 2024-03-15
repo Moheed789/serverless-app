@@ -35,13 +35,10 @@ functions:
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
-          - 'dynamodb:Query'
+          - 'dynamodb:Scan'
         Resource:
-          - Fn::Join:
-            - '/'
-            - - Fn::GetAtt: [EmployeeTable, Arn]
-              - 'index'
-              - 'department-index'
+          - Fn::GetAtt: [EmployeeTable, Arn]
+
     events:
       - http:
           path: /getEmployee
@@ -142,18 +139,9 @@ resources:
         AttributeDefinitions:
           - AttributeName: 'id'
             AttributeType: 'S'
-          - AttributeName: 'department'
-            AttributeType: 'S'
         KeySchema:
           - AttributeName: 'id'
             KeyType: 'HASH'
-        GlobalSecondaryIndexes:
-          - IndexName: department-index
-            KeySchema:
-              - AttributeName: 'department'
-                KeyType: 'HASH'
-            Projection:
-              ProjectionType: ALL
     MyS3Bucket:
       Type: AWS::S3::Bucket
       Properties:
